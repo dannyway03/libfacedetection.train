@@ -486,7 +486,7 @@ class YuNet_Head(BaseDenseHead, BBoxTestMixin):
                                                  flatten_objectness.detach(),
                                                  flatten_priors,
                                                  flatten_bboxes.detach(),
-                                                 gt_bboxes, gt_labels, gt_kpss)
+                                                 gt_bboxes[0], gt_labels[0], gt_kpss[0])
 
         # The experimental results show that ‘reduce_mean’ can improve
         # performance on the COCO dataset.
