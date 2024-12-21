@@ -21,46 +21,55 @@ Visualization of our network architecture: [\[netron\]](https://netron.app/?url=
   - [Compare ONNX model with other works](#compare-onnx-model-with-other-works)
   - [Citation](#citation)
 
-## Installation
+## Installation (Ubuntu 22.04)
 
-1. Create conda environment. e.g.
+1. Install python 3.8
    ```shell
-   conda create -n yunet python=3.8
-   conda activate yunet
+   sudo add-apt-repository ppa:deadsnakes/ppa -y
+   sudo apt update
+   sudo apt install python3.8 python3.8-dev python3.8-venv
    ```
-1. Install [PyTorch](https://pytorch.org/) == v1.8.2 (LTS) following official instruction. e.g.\
+   
+2. Create python 3.8 environment. e.g.
+   ```shell
+   python3.8 -m venv yunet
+   source yunet/bin/activate
+   ```
+   
+3. Install Torch == v1.8.2 (LTS) following official instruction. e.g.\
    On GPU platforms (cu11.1):
    ```shell
-   # LINUX:
-   conda install pytorch torchvision torchaudio cudatoolkit=11.1 -c pytorch-lts -c nvidia
-   # WINDOWS:
-   conda install pytorch torchvision torchaudio cudatoolkit=11.1 -c pytorch-lts -c conda-forge
+   # CUDA 10.2
+   pip install torch==1.8.2 torchvision==0.9.2 --extra-index-url https://download.pytorch.org/whl/lts/1.8/cu102
+
+   # CUDA 11.1
+   pip install torch==1.8.2 torchvision==0.9.2 --extra-index-url https://download.pytorch.org/whl/lts/1.8/cu111
+
+   # CPU Only
+   pip install torch==1.8.2 torchvision==0.9.2 --extra-index-url https://download.pytorch.org/whl/lts/1.8/cpu
    ```
-   On GPU platforms (cu10.2):
-   ```shell
-   conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch-lts
-   ```
-2. Install [MMCV](https://github.com/open-mmlab/mmcv) >= v1.3.17 but  <=1.6.0 following official instruction. e.g.
+   
+4. Install MMCV v1.3.17
    ```shell
    # cu11.1
    pip install mmcv-full==1.3.17 -f https://download.openmmlab.com/mmcv/dist/cu111/torch1.8.0/index.html
    # cu10.2
    pip install mmcv-full==1.3.17 -f https://download.openmmlab.com/mmcv/dist/cu102/torch1.8.0/index.html
+   #cpu
+   pip install mmcv-full==1.3.17 -f https://download.openmmlab.com/mmcv/dist/cpu/torch1.8.0/index.html
    ```
-3. Clone this repository. We will call the cloned directory as `$TRAIN_ROOT`.
+   
+5. Clone this repository.
    ```Shell
-   git clone https://github.com/ShiqiYu/libfacedetection.train.git
+   git clone git@github.com:dannyway03/libfacedetection.train.git
    cd libfacedetection.train
-   ```
-4. Install dependencies.
-   ```shell
    python setup.py develop
+   ```
+   
+6. Install remaining dependencies.
+   ```shell
    pip install -r requirements.txt
    ```
-
-_Note_: 
-   1. Codes are based on Python 3+.
-   2. If meet error "ModuleNotFoundError: No module named 'torch.ao'", you can `Ctrl + click` to origin line and replace `torch.ao` to `torch`
 
 
 ## Preparation
@@ -90,13 +99,17 @@ The `labelv2` comes from [SCRFD](https://github.com/deepinsight/insightface/tree
 Following MMdetection training processing.
 
 ```Shell
+# CUDA
 CUDA_VISIBLE_DEVICES=0,1 bash tools/dist_train.sh ./configs/yunet_n.py 2 12345
+
+# CPU
+CUDA_VISIBLE_DEVICES=-1 python tools/train.py ./configs/yunet_n.py
 ```
 
 ## Detection
 
 ```Shell
-python tools/detect_image.py ./configs/yunet_n.py ./weights/yunet_n.pth ./image.jpg
+python tools/detect_image.py ./configs/yunet_n.py ./weights/yunet_n.pth ./demo/demo.jpg
 ```
 
 ## Evaluation on WIDER Face

@@ -28,7 +28,7 @@ def parse_args():
         help='verify the onnx model output against pytorch output')
     parser.add_argument(
         '--simplify',
-        action='store_true',
+        action='store_false',
         help='Whether to simplify onnx model.')
     parser.add_argument(
         '--shape',
@@ -132,11 +132,9 @@ def pytorch2onnx(model,
             min_required_version
         ), f'Requires to install onnx-simplify>={min_required_version}'
 
-        input_dic = {'input': img_list[0].detach().cpu().numpy()}
-        model_opt, check_ok = onnxsim.simplify(
-            output_file,
-            input_data=input_dic,
-        )
+        net = onnx.load(output_file)
+        model_opt, check_ok = onnxsim.simplify(net)
+
         if check_ok:
             output_file_sim = output_file.replace('.onnx', '_sim.onnx')
             onnx.save(model_opt, output_file_sim)

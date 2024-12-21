@@ -177,9 +177,9 @@ class BaseDetector(nn.Module, metaclass=ABCMeta):
         the outer list indicating test time augmentations.
         """
         if return_loss:
-            return self.forward_train(img[0], img_metas, **kwargs)
+            return self.forward_train(img, img_metas, **kwargs)
         else:
-            return self.forward_test(img[0], img_metas, **kwargs)
+            return self.forward_test(img, img_metas, **kwargs)
 
     def _parse_losses(self, losses):
         """Parse the raw outputs (losses) of the network.
