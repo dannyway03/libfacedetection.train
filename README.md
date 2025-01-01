@@ -30,49 +30,38 @@ Visualization of our network architecture: [\[netron\]](https://netron.app/?url=
    sudo apt install python3.8 python3.8-dev python3.8-venv
    ```
    
-2. Create python 3.8 environment. e.g.
-   ```shell
-   python3.8 -m venv yunet
-   source yunet/bin/activate
-   ```
-   
-3. Install Torch == v1.8.2 (LTS) following official instruction. e.g.\
-   On GPU platforms (cu11.1):
-   ```shell
-   # CUDA 10.2
-   pip install torch==1.8.2 torchvision==0.9.2 --extra-index-url https://download.pytorch.org/whl/lts/1.8/cu102
-
-   # CUDA 11.1
-   pip install torch==1.8.2 torchvision==0.9.2 --extra-index-url https://download.pytorch.org/whl/lts/1.8/cu111
-
-   # CPU Only
-   pip install torch==1.8.2 torchvision==0.9.2 --extra-index-url https://download.pytorch.org/whl/lts/1.8/cpu
-   ```
-   
-4. Install MMCV v1.3.17
-   ```shell
-   # cu11.1
-   pip install mmcv-full==1.3.17 -f https://download.openmmlab.com/mmcv/dist/cu111/torch1.8.0/index.html
-   # cu10.2
-   pip install mmcv-full==1.3.17 -f https://download.openmmlab.com/mmcv/dist/cu102/torch1.8.0/index.html
-   #cpu
-   pip install mmcv-full==1.3.17 -f https://download.openmmlab.com/mmcv/dist/cpu/torch1.8.0/index.html
-   ```
-   
-5. Clone this repository.
+2. Clone this repository.
    ```Shell
    git clone git@github.com:dannyway03/libfacedetection.train.git
    cd libfacedetection.train
-   python setup.py develop
    ```
    
-6. Install remaining dependencies.
+3. Create python 3.8 venv
    ```shell
+   python3.8 -m venv venv
+   source venv/bin/activate
+   ```
+   
+4. Install Torch == v1.8.1 (LTS) following official instruction \
+   Modify according your platform (cuda/cpu):
+   ```shell
+   pip install torch==1.8.1 torchvision==0.9.1 --extra-index-url https://download.pytorch.org/whl/lts/1.8/<cu102, cu111, cpu>
+   ```
+   
+5. Install MMCV v1.4.4 \
+   Modify according your platform (cuda/cpu):
+   ```shell
+   pip install mmcv-full==1.4.4 -f https://download.openmmlab.com/mmcv/dist/<cu102, cu111, cpu>/torch1.8.0/index.html
+   ```
+   
+6. Setup the repo and install remaining dependencies.
+   ```shell
+   python setup.py develop
    pip install -r requirements.txt
    ```
 
 
-## Preparation
+## Dataset Preparation
 
 1. Download the [WIDER Face](http://shuoyang1213.me/WIDERFACE/) dataset and its [evaluation tools](http://shuoyang1213.me/WIDERFACE/support/eval_script/eval_tools.zip).
 2. Extract zip files under `$TRAIN_ROOT/data/widerface` as follows:

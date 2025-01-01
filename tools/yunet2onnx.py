@@ -24,7 +24,7 @@ def parse_args():
 
     parser.add_argument(
         '--verify',
-        action='store_true',
+        action='store_false',
         help='verify the onnx model output against pytorch output')
     parser.add_argument(
         '--simplify',
